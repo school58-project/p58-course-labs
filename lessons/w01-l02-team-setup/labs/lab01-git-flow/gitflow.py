@@ -10,10 +10,10 @@ PR_SECTIONS = ("## Что сделано", "## Как проверить", "## �
 AGENTS_SECTIONS = ("## Стек", "## Правила", "## Как проверить")
 
 TRANSLIT = {
-    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ж": "zh",
-    "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "e", "ж": "zh",
+    "з": "z", "и": "i", "й": "y", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
-    "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
+    "ц": "c", "ч": "ch", "ш": "sh", "щ": "sch", "ъ": "", "ы": "y", "ь": "",
     "э": "e", "ю": "yu", "я": "ya",
 }
 
@@ -25,9 +25,9 @@ def slugify(title: str) -> str:
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
-        elif ch.isalnum():
+        elif ch.isascii() and ch.isalnum():
             result += ch
-        else:
+        elif not result.endswith("-"):
             result += "-"
     return result.strip("-")
 
