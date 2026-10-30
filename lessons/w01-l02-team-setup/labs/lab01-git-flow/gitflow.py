@@ -13,7 +13,7 @@ TRANSLIT = {
     "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ж": "zh",
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
-    "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
+    "ц": "c", "ч": "ch", "ш": "sh", "щ": "sch", "ё": "e", "й": "y", "ъ": "", "ы": "y", "ь": "",
     "э": "e", "ю": "yu", "я": "ya",
 }
 
@@ -27,7 +27,7 @@ def slugify(title: str) -> str:
             result += TRANSLIT[ch]
         elif ch.isalnum():
             result += ch
-        else:
+        elif not result.endswith("-"):
             result += "-"
     return result.strip("-")
 
