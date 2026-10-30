@@ -11,13 +11,22 @@
 
 ## Как начать
 
-Нужны Git и Python 3.12 или новее (macOS/Linux; на Windows — WSL или Git Bash).
+Работаем на **учебном сервере курса** (логин и адрес выдаёт преподаватель). Начните с
+[лабораторной 01](lessons/w01-l02-team-setup/labs/lab01-git-flow/README.md): там по шагам — вход на сервер
+и SSH-ключ (шаг 0), клон, своя ветка, решение, `check.py`, коммиты и pull request.
+Подробная инструкция для Windows — [`docs/server-windows.md`](docs/server-windows.md):
+[первый вход](docs/server-windows.md#1-первый-вход-и-смена-пароля),
+[SSH-ключ](docs/server-windows.md#2-создать-ssh-ключ-на-своём-компьютере),
+[GitHub на сервере](docs/server-windows.md#5-подключить-github-на-сервере),
+[сдача через PR](docs/server-windows.md#6-сдача-домашки-своя-ветка-и-pull-request),
+[частые проблемы](docs/server-windows.md#7-частые-проблемы).
+
+Можно и на своём компьютере: нужны Git и Python 3.12 или новее (macOS/Linux; на Windows — WSL или Git Bash).
 
 ```bash
-# 1. Сделайте fork репы https://github.com/school58-project/p58-course-labs (кнопка Fork) и склонируйте свой fork
-git clone https://github.com/<ваш-ник>/p58-course-labs.git
+# 1. Склонируйте общую репу курса (push — после приглашения от преподавателя)
+git clone git@github.com:school58-project/p58-course-labs.git
 cd p58-course-labs
-git remote add upstream https://github.com/school58-project/p58-course-labs.git   # основная репа курса
 
 # 2. Окружение Python
 python3 -m venv .venv
@@ -37,12 +46,16 @@ python check.py -v 3     # подробности по задаче 3
 
 ## Как сдавать
 
-1. Обновите свой fork: `git pull upstream main` (или кнопка «Sync fork» на GitHub).
-2. Создайте ветку по правилам проекта, например `git switch -c feature/1-lab01`.
+Подробно, с примерами экрана — [раздел 6 инструкции](docs/server-windows.md#6-сдача-домашки-своя-ветка-и-pull-request).
+
+Все работают в этой репе, каждый — в своей ветке. В `main` не пушим (она защищена), чужие ветки не трогаем.
+
+1. Возьмите свежие материалы: `git switch main && git pull origin main`.
+2. Создайте свою ветку `<ваш-ник>/<лаба>` (ник на GitHub), например `git switch -c <ваш-ник>/lab01`.
 3. Делайте небольшие коммиты в формате `область: что сделано`.
-4. Запушьте ветку в свой fork (`git push -u origin <ветка>`) и откройте pull request
-   в основную репу `school58-project/p58-course-labs`.
+4. Запушьте ветку (`git push -u origin <ваш-ник>/lab01`) и откройте pull request в `main`.
    В описании PR — разделы `## Что сделано`, `## Как проверить`, `## Что сгенерировал агент`.
+   Новые материалы вышли, пока работали, — `git pull origin main` в своей ветке.
 5. Преподаватель запускает тесты по вашему PR и ставит отметку. PR не сливается в основную ветку —
    это просто способ сдать работу.
 
