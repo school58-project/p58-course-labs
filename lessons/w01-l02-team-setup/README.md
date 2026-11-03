@@ -2,7 +2,11 @@
 
 > Рабочая версия 1 (29.10.2026): план перерабатывается по итогам встреч менторов, часть решений на согласовании и может измениться.
 
-**Неделя 1** (26.10–01.11) · Триместр 1 · Семинар · 3 академических часа
+**Неделя 1** (03.11–06.11) · Триместр 1 · Семинар · 3 академических часа
+
+**Дата:** пт 06.11.2026, 20:00–22:00 МСК
+
+**▶ [Открыть семинар в браузере](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html)** · [⤓ Скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html#download)
 
 ## Цели
 
@@ -27,7 +31,7 @@
 
 ## Материалы
 
-- [Семинар: презентация](seminar.html) — открыть в браузере; исходник [`seminar.deck`](seminar.deck)
+- Семинар: презентация — [открыть в браузере](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html#download); файл [`seminar.html`](seminar.html), исходник [`seminar.deck`](seminar.deck)
 - Лабораторная: [`labs/lab01-git-flow`](labs/lab01-git-flow/README.md) — автопроверка `python check.py`
 - Практика: [`practice/console`](practice/console/README.md)
 
@@ -40,5 +44,7 @@
 ## Домашнее задание
 
 Лабораторная 01 «Git-процесс» руками, все шаги по порядку из её README: шаг 0 — вход на учебный сервер и SSH-ключ ([инструкция](../../docs/server-windows.md)), дальше клон → своя ветка `<ник>/lab01` → задачи → `python check.py` → коммиты и push → pull request.
+
+**Срок:** до начала урока 03 — вт 10.11.2026, 20:00 МСК.
 
 **Результат недели по плану:** Один проект — библиотека браузерных игр, роли выбраны; консоль и Git руками; регистрация на PROD (до 01.12)

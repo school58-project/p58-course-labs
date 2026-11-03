@@ -64,11 +64,13 @@ python check.py -v 3     # подробности по задаче 3
 ## Расписание
 
 <!-- schedule -->
-| Нед. | Даты | Урок | Тема | Лабораторная | Контест |
-|---|---|---|---|---|---|
-| 0 | до курса | [00 · Вводный](lessons/w00-l00-networks/README.md) | Как работает сеть (повторение) | | |
-| 1 | 26.10–01.11 | [01 · Лекция](lessons/w01-l01-kickoff/README.md) | Кикофф: игры из Telegram, роли, Git-процесс |  |  |
-| 1 | 26.10–01.11 | [02 · Семинар](lessons/w01-l02-team-setup/README.md) | Семинар: Консоль и Git руками | [lab01](lessons/w01-l02-team-setup/labs/lab01-git-flow/README.md) |  |
+Уроки по вторникам и пятницам, 20:00–22:00 МСК. ДЗ урока сдаётся до начала следующего урока.
+
+| Нед. | Дата | Урок | Тема | ДЗ до | Лабораторная | Контест |
+|---|---|---|---|---|---|---|
+| 0 | до курса | [00 · Вводный](lessons/w00-l00-networks/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w00-l00-networks/lecture.html) | Как работает сеть (повторение) | | | |
+| 1 | вт 03.11 | [01 · Лекция](lessons/w01-l01-kickoff/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w01-l01-kickoff/lecture.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l01-kickoff/lecture.html#download) | Кикофф: игры из Telegram, роли, Git-процесс | пт 06.11 |  |  |
+| 1 | пт 06.11 | [02 · Семинар](lessons/w01-l02-team-setup/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html#download) | Семинар: Консоль и Git руками | вт 10.11 | [lab01](lessons/w01-l02-team-setup/labs/lab01-git-flow/README.md) |  |
 <!-- /schedule -->
 
 Правила контестов — [`docs/contest-rules.md`](docs/contest-rules.md).
