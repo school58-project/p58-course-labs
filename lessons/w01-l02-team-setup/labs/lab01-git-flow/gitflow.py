@@ -14,9 +14,8 @@ TRANSLIT = {
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
     "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
-    "э": "e", "ю": "yu", "я": "ya",
+    "э": "e", "ю": "yu", "я": "ya", " ": "-", "×": "-", ":": "", ";": "-", "ё": "e", "щ": "sch", "й": "y"
 }
-
 
 # Задача 1
 def slugify(title: str) -> str:
@@ -25,18 +24,24 @@ def slugify(title: str) -> str:
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
-        elif ch.isalnum():
+        elif ch.isalnum() and ch.isascii():
             result += ch
         else:
+            # print(ch)
             result += "-"
+    while '--' in result:
+        result = result.replace("--", '-')
     return result.strip("-")
 
 
-# Задача 2
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    a = ['feature', 'fix', 'docs', 'chore']
+    if kind in a:
+        return f"{kind}/{issue}-{slugify(title)}"
+    else:
+        raise ValueError
 
 
 # Задача 3
