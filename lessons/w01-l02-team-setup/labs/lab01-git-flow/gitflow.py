@@ -14,23 +14,33 @@ TRANSLIT = {
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
     "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
-    "э": "e", "ю": "yu", "я": "ya",
+    "э": "e", "ю": "yu", "я": "ya", "ё": "e", "й": "y", "щ": "sch"
 }
 
-
 # Задача 1
+
 def slugify(title: str) -> str:
     """Заголовок issue → slug: латиница, цифры и одиночные дефисы."""
     result = ""
+    tt = 0
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
+            tt = 1
+            print('1')
         elif ch.isalnum():
             result += ch
+            tt = 1
+            print('2')
         else:
-            result += "-"
+            print('4')
+            if tt == 1:
+                result += "-"
+                tt = 0
+                print('3')
+            else:
+                result += ""
     return result.strip("-")
-
 
 # Задача 2
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
