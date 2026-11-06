@@ -21,7 +21,6 @@ TRANSLIT = {
 def slugify(title: str) -> str:
     """Заголовок issue → slug: латиница, цифры и одиночные дефисы."""
     result = ""
-    buf = 0  # буффер пробелов  
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
@@ -38,7 +37,7 @@ def slugify(title: str) -> str:
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    a = ['feature', 'fix']
+    a = ['feature', 'fix', 'docs', 'chore']
     if kind in a:
         return f"{kind}/{issue}-{slugify(title)}"
     else:
