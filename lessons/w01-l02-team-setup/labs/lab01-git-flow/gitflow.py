@@ -17,30 +17,32 @@ TRANSLIT = {
     "э": "e", "ю": "yu", "я": "ya", " ": "-", "×": "-", ":": "", ";": "-", "ё": "e", "щ": "sch", "й": "y"
 }
 
-
 # Задача 1
 def slugify(title: str) -> str:
     """Заголовок issue → slug: латиница, цифры и одиночные дефисы."""
     result = ""
-    buf = 0  # буффер пробелов
+    buf = 0  # буффер пробелов  
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
         elif ch.isalnum() and ch.isascii():
             result += ch
         else:
-            print(ch)
+            # print(ch)
             result += "-"
     while '--' in result:
         result = result.replace("--", '-')
     return result.strip("-")
 
 
-# Задача 2
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    a = ['feature', 'fix']
+    if kind in a:
+        return f"{kind}/{issue}-{slugify(title)}"
+    else:
+        raise ValueError
 
 
 # Задача 3
