@@ -63,6 +63,8 @@ def is_valid_branch(name: str) -> bool:
 def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
+    if not message.strip():
+        return "пустое сообщение"
     first = message.splitlines()[0]
     area, sep, text = first.partition(": ")
     if not sep:
@@ -75,8 +77,6 @@ def commit_problems(message: str) -> list[str]:
         problems.append("описание должно быть с маленькой буквы")
     if  sep and text == "":
         problems.append("Пустое описание")
-    if not message.strip():
-        return "Пустое сообщение"
     if first.endswith("."):
         problems.append("точка в конце")
     return problems
