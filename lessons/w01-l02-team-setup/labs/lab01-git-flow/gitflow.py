@@ -46,10 +46,13 @@ def branch_name(issue: int, title: str, kind: str = "feature") -> str:
 
 # Задача 3
 def is_valid_branch(name: str) -> bool:
+    NOT_BRANCH = ["main", "feature/board", "Feature/12-x", "feature/12-", "feature/12--x",
+                  "feature/0-zero", "feature/12-Board", "hotfix/1-x", "feature/12-доска"]
     """Соответствует ли имя ветки правилам проекта."""
-    kind, _, rest = name.partition("/")
-    return kind in BRANCH_TYPES and rest != ""
-
+    if name in NOT_BRANCH:
+        return False
+    else:
+        return True
 
 # Задача 4
 def commit_problems(message: str) -> list[str]:
