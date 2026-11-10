@@ -14,7 +14,7 @@ TRANSLIT = {
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
     "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
-    "э": "e", "ю": "yu", "я": "ya", "ё":"yo", "й":"у", "щ": "sch"
+    "э": "e", "ю": "yu", "я": "ya", "ё":"yo", "й":"y", "щ": "sch"
 }
 
 
@@ -36,17 +36,28 @@ def slugify(title: str) -> str:
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    if kind not in BRANCH_TYPES:
+        raise ValueError("неизвестный тип")
+    else:
+        return kind + "/" + str(issue) + "-" + slugify(title)
 
 
 # Задача 3
 def is_valid_branch(name: str) -> bool:
     """Соответствует ли имя ветки правилам проекта."""
     kind, _, rest = name.partition("/")
-    return kind in BRANCH_TYPES and rest != ""
+    if kind not in BRANCH_TUPES or "-" not in rest:
+        return False
+    n, slug = rest.partition("-")
+    if not n.indigit() or slug == "":
+        return False
+    if slug != slug.lower():
+        return False
+    else:
+        returne True
 
 
-# Задача 4
+#a Задача 4
 def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
@@ -58,6 +69,8 @@ def commit_problems(message: str) -> list[str]:
         problems.append(f"неизвестная область {area!r}")
     if len(first) > 72:
         problems.append("первая строка длиннее 72 символов")
+    if text and text[0].isupper():
+        problems.append("описание должно быть с маленькой буквы")
     if first.endswith("."):
         problems.append("точка в конце")
     return problems
