@@ -33,7 +33,7 @@ def slugify(title: str) -> str:
         result = result.replace("--", '-')
     return result.strip("-")
 
-
+# Задача 2
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
@@ -66,8 +66,7 @@ def commit_problems(message: str) -> list[str]:
     COMMIT_AREAS = {"bot", "api","tests"}
     first = message.splitlines()[0]
     area, sep, text = first.partition(": ")
-    # print(area, '+', sep, '+', text)
-
+    
     if not sep:
         problems.append("нет области: нужен формат «область: что сделано»")
     elif area not in COMMIT_AREAS:
@@ -89,14 +88,44 @@ def parse_log(log: str) -> list[dict]:
     Для строк без области area = None, text — всё сообщение.
     """
     # TODO
-    return []
+    a = []
+    r = []
+    for i in log.splitlines():
+        if i != '':
+            a.append(i.split())
+    for j in a:
+        hash_ = j[0]
+
+        start_index = 2
+        if j[1].endswith(':'):
+            area = j[1][:len(j[1])-1]
+        elif '[' in j[1] or ']' in j[1]:
+            area = j[1][1:len(j[1])-1]
+        else:
+            area = None
+            start_index = 1
+
+        text = ''
+        for k in j[start_index:]:
+            text = text + ' ' + k
+        text = text[1:]
+
+        r.append({"hash": hash_, "area": area, "text": text})
+
+    return r
 
 
 def count_by_area(log: str) -> dict[str, int]:
     """Сколько коммитов в каждой области (коммиты без области не считаем)."""
     # TODO: используйте parse_log
-    return {}
-
+    a = parse_log(log)
+    # print(a)
+    b = {}
+    for i in a:
+        b[i['area']] = b.get(i['area'], 0) + 1
+    if None in b:
+        del b[None]
+    return b
 
 # Задача 6
 def pr_problems(description: str) -> list[str]:
