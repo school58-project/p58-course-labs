@@ -58,18 +58,29 @@ def is_valid_branch(name: str) -> bool:
 def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
+
+    if not message or not message.splitlines():
+        problems.append("пустое сообщение")
+        return problems
+
+    COMMIT_AREAS = {"bot", "api","tests"}
     first = message.splitlines()[0]
     area, sep, text = first.partition(": ")
+    # print(area, '+', sep, '+', text)
+
     if not sep:
         problems.append("нет области: нужен формат «область: что сделано»")
     elif area not in COMMIT_AREAS:
         problems.append(f"неизвестная область {area!r}")
+    if text == '':
+        problems.append('пустое поле текста')
+    elif text.split()[0][0].isupper():
+        problems.append("первое слово начинается с заглавной")
     if len(first) > 72:
         problems.append("первая строка длиннее 72 символов")
     if first.endswith("."):
         problems.append("точка в конце")
     return problems
-
 
 # Задача 5
 def parse_log(log: str) -> list[dict]:
