@@ -142,4 +142,24 @@ def pr_problems(description: str) -> list[str]:
 def agents_md_problems(text: str) -> list[str]:
     """Нарушения в AGENTS.md: нет обязательных разделов или есть похожие на секреты строки."""
     # TODO
-    return []
+    problems = []
+    PR_SECTIONS = ["# Как проверить"]
+    for section in PR_SECTIONS:
+        if section not in text:
+            problems.append(f"нет раздела {section!r}")
+
+    if "---BEGIN" in text or "PRIVATE KEY" in text:
+        problems.append("найден закрытый ключ")
+
+    words = text.split()
+    secrets = ("TOKEN=", "SECRET=", "KEY=", "PASSWORD=")
+
+    for word in words:
+        for i in secrets:
+            if i in word:
+                problems.append("найден закрытый ключ")
+
+        if ':' in word:
+            problems.append("найден закрытый ключ")
+
+    return problems
