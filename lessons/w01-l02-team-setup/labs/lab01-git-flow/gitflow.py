@@ -137,8 +137,9 @@ def pr_problems(description: str) -> list[str]:
     for section in PR_SECTIONS:
         if section not in description:
             problems.append(f"нет раздела {section!r}")
+    if not re.search(r"Closes #\d+", description):
+    	problems.append("нет ссылки на задачу")
     return problems
-
 
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
