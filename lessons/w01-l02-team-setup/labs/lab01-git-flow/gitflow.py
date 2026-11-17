@@ -14,42 +14,58 @@ TRANSLIT = {
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
     "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
-    "э": "e", "ю": "yu", "я": "ya",
+    "э": "e", "ю": "yu", "я": "ya", "ё": "e", "й": "y", "щ": "sch"
 }
 
-
 # Задача 1
+
 def slugify(title: str) -> str:
     """Заголовок issue → slug: латиница, цифры и одиночные дефисы."""
     result = ""
+    tt = 0
     for ch in title.lower():
         if ch in TRANSLIT:
             result += TRANSLIT[ch]
+            tt = 1
+            print('1')
         elif ch.isalnum():
             result += ch
+            tt = 1
+            print('2')
         else:
-            result += "-"
+            print('4')
+            if tt == 1:
+                result += "-"
+                tt = 0
+                print('3')
+            else:
+                result += ""
     return result.strip("-")
-
 
 # Задача 2
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    if kind not in BRANCH_TYPES:
+        raise ValueError("Неверный тип ветки")
 
+    return f"{kind}/{issue}-{slugify(title)}"
 
 # Задача 3
 def is_valid_branch(name: str) -> bool:
     """Соответствует ли имя ветки правилам проекта."""
     kind, _, rest = name.partition("/")
-    return kind in BRANCH_TYPES and rest != ""
+    return kind in BRANCH_TYPES and re.fullmatch(r"[1-9][0-9]*-[a-z0-9]+(-[a-z0-9]+)*", rest) is not None
 
 
 # Задача 4
 def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
+
+    if not message.strip():
+        return ["пустой ввод"]
+
     first = message.splitlines()[0]
     area, sep, text = first.partition(": ")
     if not sep:
@@ -60,8 +76,11 @@ def commit_problems(message: str) -> list[str]:
         problems.append("первая строка длиннее 72 символов")
     if first.endswith("."):
         problems.append("точка в конце")
+    if sep and not text.strip():
+        problems.append("нет описания")
+    if text and text[0].isupper():
+        problems.append("описание с большой буквы")
     return problems
-
 
 # Задача 5
 def parse_log(log: str) -> list[dict]:
@@ -70,13 +89,45 @@ def parse_log(log: str) -> list[dict]:
     Для строк без области area = None, text — всё сообщение.
     """
     # TODO
-    return []
+    result = []
+
+    for line in log.splitlines():
+        if not line.strip():
+            continue
+
+        parts = line.strip().split(" ", 1)
+
+        if len(parts) < 2:
+            continue
+
+        commit_hash, message = parts
+        area, sep, text = message.partition(": ")
+
+        if not sep:
+            area = None
+            text = message
+
+        result.append({"hash": commit_hash, "area": area, "text": text})
+
+    return result
+
 
 
 def count_by_area(log: str) -> dict[str, int]:
     """Сколько коммитов в каждой области (коммиты без области не считаем)."""
     # TODO: используйте parse_log
-    return {}
+    result = {}
+
+    for item in parse_log(log):
+        area = item["area"]
+
+        if area is not None:
+            if area not in result:
+                result[area] = 0
+
+            result[area] += 1
+
+    return result
 
 
 # Задача 6
@@ -86,8 +137,9 @@ def pr_problems(description: str) -> list[str]:
     for section in PR_SECTIONS:
         if section not in description:
             problems.append(f"нет раздела {section!r}")
+    if not re.search(r"Closes #\d+", description):
+    	problems.append("нет ссылки на задачу")
     return problems
-
 
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
