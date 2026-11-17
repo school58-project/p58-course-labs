@@ -122,6 +122,8 @@ def pr_problems(description: str) -> list[str]:
     for section in PR_SECTIONS:
         if section not in description:
             problems.append(f"нет раздела {section!r}")
+    if "Closes #" not in description:
+        problems.append("нет ссылки")
     return problems
 
 
