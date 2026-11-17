@@ -88,14 +88,31 @@ def parse_log(log: str) -> list[dict]:
 
     Для строк без области area = None, text — всё сообщение.
     """
-    # TODO
-    return []
-
+    comit = []
+    for l in log.splitlines():
+        l = l.strip()
+        p = l.split(" ",1)
+        c_hash = p[0]
+        if len(p) > 1:
+            m = p[1]
+        else:
+            m = ''
+        area, s, text =  m.partition(": ")
+        if s:
+            comit.append({"hash": c_hash, "area": area, "text":text})
+        else:
+            comit.append({"hash": c_hash, "area": None, "text":m})
+    return comit
 
 def count_by_area(log: str) -> dict[str, int]:
     """Сколько коммитов в каждой области (коммиты без области не считаем)."""
     # TODO: используйте parse_log
-    return {}
+    c = {}
+    for com in parse_log(log):
+        area = com["area"]
+        if area is not None:
+            c[area] = c.get(area,0)+1
+    return c
 
 
 # Задача 6
