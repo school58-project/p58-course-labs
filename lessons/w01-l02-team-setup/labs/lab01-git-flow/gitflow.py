@@ -14,7 +14,7 @@ TRANSLIT = {
     "з": "z", "и": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o",
     "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h",
     "ц": "c", "ч": "ch", "ш": "sh", "ъ": "", "ы": "y", "ь": "",
-    "э": "e", "ю": "yu", "я": "ya",
+    "э": "e", "ю": "yu", "я": "ya", "ё":"e", "й":"y", "щ": "sch"
 }
 
 
@@ -29,6 +29,8 @@ def slugify(title: str) -> str:
             result += ch
         else:
             result += "-"
+    while "--" in result:
+        result = result.replace("--","-")
     return result.strip("-")
 
 
@@ -36,20 +38,33 @@ def slugify(title: str) -> str:
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    if kind not in BRANCH_TYPES:
+        raise ValueError("неизвестный тип")
+    else:
+        return kind + "/" + str(issue) + "-" + slugify(title)
 
 
 # Задача 3
 def is_valid_branch(name: str) -> bool:
     """Соответствует ли имя ветки правилам проекта."""
     kind, _, rest = name.partition("/")
-    return kind in BRANCH_TYPES and rest != ""
+    if kind not in BRANCH_TYPES or "-" not in rest:
+        return False
+    n, slug = rest.split('-',1)
+    if not n.isdigit() or slug == ""or int(n)<=0:
+        return False
+    if slug != slug.lower() or "--" in slug or slug[0] == "-" or slug[-1] =="-" or not slug.isascii():
+        return False
+    else:
+        return True
 
 
-# Задача 4
+#a Задача 4
 def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
+    if not message.strip():
+        return "пустое сообщение"
     first = message.splitlines()[0]
     area, sep, text = first.partition(": ")
     if not sep:
@@ -58,6 +73,10 @@ def commit_problems(message: str) -> list[str]:
         problems.append(f"неизвестная область {area!r}")
     if len(first) > 72:
         problems.append("первая строка длиннее 72 символов")
+    if text and text[0].isupper():
+        problems.append("описание должно быть с маленькой буквы")
+    if  sep and text == "":
+        problems.append("Пустое описание")
     if first.endswith("."):
         problems.append("точка в конце")
     return problems
@@ -69,14 +88,31 @@ def parse_log(log: str) -> list[dict]:
 
     Для строк без области area = None, text — всё сообщение.
     """
-    # TODO
-    return []
-
+    comit = []
+    for l in log.splitlines():
+        l = l.strip()
+        p = l.split(" ",1)
+        c_hash = p[0]
+        if len(p) > 1:
+            m = p[1]
+        else:
+            m = ''
+        area, s, text =  m.partition(": ")
+        if s:
+            comit.append({"hash": c_hash, "area": area, "text":text})
+        else:
+            comit.append({"hash": c_hash, "area": None, "text":m})
+    return comit
 
 def count_by_area(log: str) -> dict[str, int]:
     """Сколько коммитов в каждой области (коммиты без области не считаем)."""
     # TODO: используйте parse_log
-    return {}
+    c = {}
+    for com in parse_log(log):
+        area = com["area"]
+        if area is not None:
+            c[area] = c.get(area,0)+1
+    return c
 
 
 # Задача 6
@@ -86,11 +122,28 @@ def pr_problems(description: str) -> list[str]:
     for section in PR_SECTIONS:
         if section not in description:
             problems.append(f"нет раздела {section!r}")
+    if "Closes #" not in description:
+        problems.append("нет ссылки")
     return problems
 
 
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
     """Нарушения в AGENTS.md: нет обязательных разделов или есть похожие на секреты строки."""
-    # TODO
-    return []
+    p = []
+    for s in AGENTS_SECTIONS:
+        if s not in text:
+            p.append("нет раздела")
+    k = ["token", "secret", "password", "api_key", "api-key"]
+    for l in text.lower().splitlines():
+        for t in k:
+            if t in l and "=" in l :
+                p.append("похоже на секрет")
+        if "private key" in l:
+            p.append("похоже на секрет")
+        elif ":" in l:
+            a, _, b = l.partition(":")
+            word = a.split()[-1]
+            if word.isdigit() and len(b) > 30:
+                p.append("похоже на секрет")
+    return p
