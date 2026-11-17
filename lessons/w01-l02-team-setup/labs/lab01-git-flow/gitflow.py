@@ -46,8 +46,10 @@ def slugify(title: str) -> str:
 def branch_name(issue: int, title: str, kind: str = "feature") -> str:
     """Имя ветки для issue: feature/12-knopka-igrat."""
     # TODO: проверить kind и собрать имя
-    raise NotImplementedError
+    if kind not in BRANCH_TYPES:
+        raise ValueError("Неверный тип ветки")
 
+    return f"{kind}/{issue}-{slugify(title)}"
 
 # Задача 3
 def is_valid_branch(name: str) -> bool:
