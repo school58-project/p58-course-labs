@@ -55,7 +55,7 @@ def branch_name(issue: int, title: str, kind: str = "feature") -> str:
 def is_valid_branch(name: str) -> bool:
     """Соответствует ли имя ветки правилам проекта."""
     kind, _, rest = name.partition("/")
-    return kind in BRANCH_TYPES and rest != ""
+    return kind in BRANCH_TYPES and re.fullmatch(r"[1-9][0-9]*-[a-z0-9]+(-[a-z0-9]+)*", rest) is not None
 
 
 # Задача 4
@@ -73,7 +73,6 @@ def commit_problems(message: str) -> list[str]:
     if first.endswith("."):
         problems.append("точка в конце")
     return problems
-
 
 # Задача 5
 def parse_log(log: str) -> list[dict]:
