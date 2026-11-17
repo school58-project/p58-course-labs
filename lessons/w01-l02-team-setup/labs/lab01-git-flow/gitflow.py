@@ -131,12 +131,13 @@ def count_by_area(log: str) -> dict[str, int]:
 def pr_problems(description: str) -> list[str]:
     """Нарушения в описании pull request."""
     problems = []
+    PR_SECTIONS = ['## Что сделано',
+                   '## Как проверить', '## Что сгенерировал агент', 'Closes',]
+    # print(description)
     for section in PR_SECTIONS:
         if section not in description:
             problems.append(f"нет раздела {section!r}")
     return problems
-
-
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
     """Нарушения в AGENTS.md: нет обязательных разделов или есть похожие на секреты строки."""
