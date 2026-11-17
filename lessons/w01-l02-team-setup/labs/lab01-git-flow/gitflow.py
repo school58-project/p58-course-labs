@@ -63,7 +63,7 @@ def commit_problems(message: str) -> list[str]:
     """Список нарушений в первой строке сообщения коммита. Пустой список — всё хорошо."""
     problems = []
 
-    if message == "":
+    if not message.strip():
         return ["пустой ввод"]
 
     first = message.splitlines()[0]
@@ -76,6 +76,10 @@ def commit_problems(message: str) -> list[str]:
         problems.append("первая строка длиннее 72 символов")
     if first.endswith("."):
         problems.append("точка в конце")
+    if sep and not text.strip():
+        problems.append("нет описания")
+    if text and text[0].isupper():
+        problems.append("описание с большой буквы")
     return problems
 
 # Задача 5
