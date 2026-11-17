@@ -130,5 +130,20 @@ def pr_problems(description: str) -> list[str]:
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
     """Нарушения в AGENTS.md: нет обязательных разделов или есть похожие на секреты строки."""
-    # TODO
-    return []
+    p = []
+    for s in AGENTS_SECTIONS:
+        if s not in text:
+            p.append("нет раздела")
+    k = ["token", "secret", "password", "api_key", "api-key"]
+    for l in text.lower().splitlines():
+        for t in k:
+            if t in l and "=" in l :
+                p.append("похоже на секрет")
+        if "private key" in l:
+            p.append("похоже на секрет")
+        elif ":" in l:
+            a, _, b = l.partition(":")
+            word = a.split()[-1]
+            if word.isdigit() and len(b) > 30:
+                p.append("похоже на секрет")
+    return p
