@@ -4,7 +4,7 @@
 
 Здесь лежат материалы курса «Проект 58»: презентации уроков, практические задания и лабораторные
 со стартовым кодом и автопроверкой. Материалы добавляются по неделям — перед уроком появляется
-следующая неделя. Сейчас выложено: вводный урок 00 и неделя 1 (выгрузка 1).
+следующая неделя. Сейчас выложено: вводный урок 00 и недели 1–2 (выгрузка 1).
 
 **Этап 0 (до конца декабря): весь код пишем руками.** Агента можно спрашивать, что значит код
 или ошибка, но его код не вставляем.
@@ -71,6 +71,8 @@ python check.py -v 3     # подробности по задаче 3
 | 0 | до курса | [00 · Вводный](lessons/w00-l00-networks/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w00-l00-networks/lecture.html) | Как работает сеть (повторение) | | | |
 | 1 | вт 03.11 | [01 · Лекция](lessons/w01-l01-kickoff/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w01-l01-kickoff/lecture.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l01-kickoff/lecture.html#download) | Кикофф: игры из Telegram, роли, Git-процесс | пт 06.11 |  |  |
 | 1 | пт 06.11 | [02 · Семинар](lessons/w01-l02-team-setup/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w01-l02-team-setup/seminar.html#download) | Семинар: Консоль и Git руками | вт 10.11 | [lab01](lessons/w01-l02-team-setup/labs/lab01-git-flow/README.md) |  |
+| 2 | вт 10.11 | [03 · Лекция](lessons/w02-l01-spec-first/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w02-l01-spec-first/lecture.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w02-l01-spec-first/lecture.html#download) | Spec-first: user story, критерии приёмки, протокол API; архитектура проекта | пт 13.11 |  |  |
+| 2 | пт 13.11 | [04 · Семинар](lessons/w02-l02-bot-and-api/README.md) · [слайды](https://school58-project.github.io/p58-course-labs/lessons/w02-l02-bot-and-api/seminar.html) · [скачать](https://school58-project.github.io/p58-course-labs/lessons/w02-l02-bot-and-api/seminar.html#download) | Семинар: спека игры 1, контракт API между ролями, каркас FastAPI руками | вт 17.11 | [lab02](lessons/w02-l02-bot-and-api/labs/lab02-api-by-spec/README.md) | [c01](contests/c01-python-git-specs/sheet.pdf) · [открыть](https://school58-project.github.io/p58-course-labs/contests/c01-python-git-specs/sheet.html) · [скачать](https://school58-project.github.io/p58-course-labs/contests/c01-python-git-specs/sheet.html#download) |
 <!-- /schedule -->
 
 Правила контестов — [`docs/contest-rules.md`](docs/contest-rules.md).
