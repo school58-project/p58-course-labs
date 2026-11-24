@@ -143,6 +143,21 @@ def pr_problems(description: str) -> list[str]:
 
 # Задача 7*
 def agents_md_problems(text: str) -> list[str]:
-    """Нарушения в AGENTS.md: нет обязательных разделов или есть похожие на секреты строки."""
-    # TODO
-    return []
+    """Нарушения в AGENTS.md: нет обязательных разделов или есть секреты."""
+    problems = []
+
+    for section in AGENTS_SECTIONS:
+        if section not in text:
+            problems.append(f"нет раздела {section!r}")
+
+    for line in text.splitlines():
+        if re.search(r"(password|token|api_key|secret)\s*[:=]\s*\S+", line, re.I):
+            problems.append("найден возможный секрет")
+
+    if re.search(r"\d{8,10}:[A-Za-z0-9_-]{30,}", text):
+        problems.append("найден токен Telegram")
+
+    if "-----BEGIN OPENSSH PRIVATE KEY-----" in text:
+        problems.append("найден приватный SSH-ключ")
+
+    return problems
